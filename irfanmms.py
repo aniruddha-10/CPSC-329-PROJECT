@@ -1,3 +1,3 @@
 import tkinter 
-top = tkinter.Tk()
+top = tkinter.Tk("loldu")
 top.mainloop()
