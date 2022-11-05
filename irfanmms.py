@@ -1,1 +1,3 @@
-print("Irfan")
+import tkinter 
+top = tkinter.Tk()
+top.mainloop()
