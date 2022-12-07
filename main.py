@@ -20,10 +20,10 @@ def hashing(x):
     hash = hash.hexdigest()
     return hash
 
-# Creatingg the GUI for when a new user
+# Creating the GUI for when a new user
 def initial_screen():
     root.title("Password Manager")
-    canvas = tk.Canvas(root, height=500, width=500, bg="DarkOrchid3")
+    canvas = tk.Canvas(root, height=500, width=500, bg="grey25")
     canvas.pack()
     frame = tk.Frame(root, bg="white")
     frame.place(relwidth=0.8, relheight=0.8, relx=0.1, rely=0.1)
@@ -34,13 +34,30 @@ def initial_screen():
     tk.Label(root, image=img, border=0).place(x=180, y=90)
 
     tk.Label(root, text="Create a Master Password", font=("Arial", 14, "bold"), bg="white", foreground="Blue").place(x=155, y=225)
-    txt = tk.Entry(border=0)
+    txt = tk.Entry(border=0, show="*")
     txt.place(x=155, y=250)
     txt.focus()
 
-    tk.Label(root, text="Re-type your Password", font=("Arial", 14, "bold"), bg="white", foreground="Blue").place(x=155, y=290)
-    txt2 = tk.Entry(border=0)
-    txt2.place(x=155,y=315)
+    def show_password():
+        if (txt.cget("show") =="*"):
+            txt.config(show="")
+        else:
+            txt.config(show="*")
+    tk.Checkbutton(root, text="Show Password",command=show_password,bg="white",foreground="black").place(x=155,y=280)
+
+
+    tk.Label(root, text="Re-type your Password", font=("Arial", 14, "bold"), bg="white", foreground="Blue").place(x=155, y=306)
+    txt2 = tk.Entry(border=0,show="*")
+    txt2.place(x=155,y=335)
+
+    def show_password():
+        if (txt2.cget("show") =="*"):
+            txt2.config(show="")
+        else:
+            txt2.config(show="*")
+    tk.Checkbutton(root, text="Show Password",command=show_password,bg="white",foreground="black").place(x=155,y=359)
+    tk.Button(root, text="Close",font=("Bahnschrift 20", 14,"bold"), bg="white",foreground="black",borderwidth=2,command=quit).place(x=370,y=420)
+
 
     def save_passwords():
         if (txt.get() == txt2.get()):
@@ -51,9 +68,9 @@ def initial_screen():
             db.commit()
             password_manager()
         else:
-            tk.Label(root, text="Passwords Don't Match", font=("Arial", 14, "bold"), bg="white", foreground="Red").place(x=170, y=380 )
+            tk.Label(root, text="Passwords Don't Match", font=("Arial", 14, "bold"), bg="white", foreground="Red").place(x=170, y=400)
 
-    tk.Button(root, text="Submit",font=("Bahnschrift 20", 14,"bold"), bg="white",foreground="black",borderwidth=2,command=save_passwords).place(x=205,y=349)
+    tk.Button(root, text="Submit",font=("Bahnschrift 20", 14,"bold"), bg="white",foreground="black",borderwidth=2,command=save_passwords).place(x=205,y=385)
     root.mainloop()
 
 
@@ -72,8 +89,17 @@ def login_screen():
 
     tk.Label(root,text="Enter Master Password",font=("Arial",14,"bold"),bg="white",foreground="Red").place(x=120,y=225)
 
-    e3 = tk.Entry(border=0)
+    e3 = tk.Entry(border=0,show="*")
     e3.place(x=106,y=250)
+
+    def show_password():
+        if (e3.cget("show") == "*"):
+            e3.config(show="")
+        else:
+            e3.config(show="*")
+
+    tk.Checkbutton(root, text="Show Password", command=show_password, bg="white", foreground="black").place(x=104,y=275)
+
 
     def get_Master_Password():
         check_Hashed = hashing(e3.get().encode("utf-8"))
@@ -91,9 +117,11 @@ def login_screen():
             if hashing(e3.get().encode("utf-8")) == check:
                 password_manager()
         except:
-            tk.Label(root,text="Wrong Password",font=("Arial",14,"bold"),bg="white",foreground="red").place(x=140,y=310)
+            tk.Label(root,text="Wrong Password",font=("Arial",14,"bold"),bg="white",foreground="red").place(x=140,y=340)
 
-    tk.Button(root, text="Submit", font=("Bahnschrift 20",14,"bold"), bg="white",foreground="black",command=password_check).place(x=160,y=280)
+    tk.Button(root, text="Submit", font=("Bahnschrift 20",14,"bold"), bg="white",foreground="black",command=password_check).place(x=160,y=305)
+    tk.Button(root, text="Close",font=("Bahnschrift 20", 14,"bold"), bg="white",foreground="black",borderwidth=2,command=quit).place(x=280,y=330)
+
     root.mainloop()
 
 # This lets the USER inside the Password Manager actually
@@ -115,7 +143,8 @@ def password_manager():
         except FileNotFoundError:
             print("No such File found")
 
-    tk.Button(root, text="Switch User?", font=("Bahnschrift 20",14,"bold"), bg="white",foreground="black",command=new_user).place(x=550,y=410)
+    tk.Button(root, text="Switch User?", font=("Bahnschrift 20",14,"bold"), bg="white",foreground="black",command=new_user).place(x=590,y=410)
+    tk.Button(root, text="Close",font=("Bahnschrift 20", 14,"bold"), bg="white",foreground="black",borderwidth=2,command=quit).place(x=500,y=410)
 
 cursor.execute("SELECT * FROM masterpassword")
 if cursor.fetchall():
