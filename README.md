@@ -26,7 +26,7 @@ The program also offers an option for a randomly generated password to be stored
 
 
 Users can use this program to manage their accounts and passwords on different websites and applications. At the time of registration, various conditions are placed on the format and composition of the master account password to ensure information security.
-Passwords are stored in non-plaintext form after adding will hashing, we chose to use sha265, the advantage because the only way to get the same hash value is to enter the same file or string. Even a small tweak can completely change the output, and sha256 is a deterministic one-way hash function, so sha256 is irreversible
+Passwords are stored in non-plaintext form after adding will hashing, we chose to use sha256, the advantage because the only way to get the same hash value is to enter the same file or string. Even a small tweak can completely change the output, and sha256 is a deterministic one-way hash function, so sha256 is irreversible
 
 
 ## Contributors:		
